@@ -2,11 +2,28 @@ var path = require('path')
 var htmlWebpackPlugin = require('html-webpack-plugin')
 var VueLoaderPlugin = require('vue-loader/lib/plugin')
 
+var express = require('express')
+var app2 = express()
+var appData = require('./static/data/goodsdata.json')
+var goods = appData.data
+var apiRoutes = express.Router()
+app2.use('/api',apiRoutes)
+
 module.exports = {
   entry: path.join(__dirname, './src/main.js'),
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js'
+  },
+  devServer: {
+    before(app2) {
+      app2.get('/api/goods', (req, res) => {
+        res.json({
+          errno: 0,
+          data: goods
+        })
+      })
+    }
   },
   plugins: [
     new htmlWebpackPlugin({
