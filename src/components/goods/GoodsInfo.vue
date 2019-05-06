@@ -1,5 +1,11 @@
 <template>
   <div class="goodsinfo-container">
+    <transition
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter">
+      <div class="ball" v-show="ballFlag" ref="ball"></div>
+    </transition>
     <!-- 商品轮播图区域 -->
     <div class="mui-card">
       <div class="mui-card-content">
@@ -18,10 +24,10 @@
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
           <p class="price">市场价：<del>￥{{ goodinfo.market_price }}</del>&nbsp;&nbsp;销售价：<span class="now_price">￥{{ goodinfo.sell_price }}</span></p>
-          <p>购买数量：<num-box></num-box></p>
+          <p>购买数量：<num-box @getcount="getSelectedCount" :max="goodinfo.stock_quantity"></num-box></p>
           <p>
             <mt-button type="primary">立即购买</mt-button>
-            <mt-button type="danger">加入购物车</mt-button>
+            <mt-button type="danger" @click="addToCart">加入购物车</mt-button>
           </p>
         </div>
       </div>
@@ -51,7 +57,9 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      goodinfo: {}
+      goodinfo: {},
+      ballFlag: false,
+      selectedCount: 1
     }
   },
   created() {
@@ -72,6 +80,33 @@ export default {
     },
     goComment(id) {
       this.$router.push({ name: "goodscomment", params: { id }})
+    },
+    addToCart() {
+      this.ballFlag = !this.ballFlag
+    },
+    beforeEnter(el) {
+      el.style.transform = "translate(0,0)"
+    },
+    enter(el,done) {
+      el.offsetWidth
+
+      const ballPosition = this.$refs.ball.getBoundingClientRect();
+      // 获取 徽标 在页面中的位置
+      const badgePosition = document
+        .getElementById("badge")
+        .getBoundingClientRect();
+
+      const xDist = badgePosition.left - ballPosition.left;
+      const yDist = badgePosition.top - ballPosition.top;
+      el.style.transform = `translate(${xDist}px, ${yDist}px)`
+      el.style.transition = "all 0.8s cubic-bezier(.15,-0.08,.87,.09)"
+      done()
+    },
+    afterEnter(el) {
+      this.ballFlag = !this.ballFlag
+    },
+    getSelectedCount(count) {
+      this.selectedCount = count;
     }
   },
   components: {
@@ -108,11 +143,11 @@ export default {
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background-color: red;
+      background-color: rgba(255,0,0,.4);
       position: absolute;
       z-index: 99;
-      top: 390px;
-      left: 146px;
+      top: 428px;
+      left: 78px;
     }
   }
 

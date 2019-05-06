@@ -5,7 +5,8 @@ var VueLoaderPlugin = require('vue-loader/lib/plugin')
 var express = require('express')
 var app2 = express()
 var appData = require('./static/data/goodsdata.json')
-var goods = appData.data
+var goods = appData.goods
+var goodsComments = appData.goodsComments
 var apiRoutes = express.Router()
 app2.use('/api',apiRoutes)
 
@@ -21,6 +22,12 @@ module.exports = {
         res.json({
           errno: 0,
           data: goods
+        })
+      })
+      app2.get('/api/goodscomments', (req, res) => {
+        res.json({
+          errno: 0,
+          data: goodsComments
         })
       })
     }

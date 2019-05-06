@@ -1,5 +1,5 @@
 {
-  "data": [
+  "goods": [
     {
       "id": 1,
       "title": "黑鲨游戏手机2 8GB+128GB Magic Press立体操控",
@@ -102,6 +102,178 @@
       "sell_price": 3099,
       "market_price": 3199,
       "stock_quantity": 20
+    }
+  ],
+  "goodsComments": [
+    {
+      "id": 1,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-21T20:09:30.00Z",
+          "content":"我来评论一下啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-20T20:09:30.00Z",
+          "content":"手机非常棒"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-19T20:09:30.00Z",
+          "content":"发烧友啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-17T20:09:30.00Z",
+          "content":"我来评论一下啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-15T20:09:30.00Z",
+          "content":"我来评论一下啦"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-06-11T20:09:30.00Z",
+          "content":"抢到优惠啦！"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-05-10T20:09:30.00Z",
+          "content":"忠实果粉来报道"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-30T20:09:30.00Z",
+          "content":"发烧友啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-19T20:09:30.00Z",
+          "content":"我来评论一下啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-15T20:09:30.00Z",
+          "content":"非常流畅"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-06-11T20:09:30.00Z",
+          "content":"非常棒，入手不后悔！"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-05-10T20:09:30.00Z",
+          "content":"有点贵"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-30T20:09:30.00Z",
+          "content":"已经用上啦"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-19T20:09:30.00Z",
+          "content":"哈哈哈哈"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-06-11T20:09:30.00Z",
+          "content":"终于买到了！"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-05-10T20:09:30.00Z",
+          "content":"可以拍美美的照了"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-30T20:09:30.00Z",
+          "content":"又要吃两个月泡面了"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-15T20:09:30.00Z",
+          "content":"剁手一时爽，一直剁手一直爽"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-06-11T20:09:30.00Z",
+          "content":"颜色太好看啦！"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-05-10T20:09:30.00Z",
+          "content":"非常非常好 "
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-30T20:09:30.00Z",
+          "content":"本座很满意"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-19T20:09:30.00Z",
+          "content":"这个颜色太漂亮"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-15T20:09:30.00Z",
+          "content":"非常流畅"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "comments": [
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-06-11T20:09:30.00Z",
+          "content":"运行很流畅！"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-05-10T20:09:30.00Z",
+          "content":"打游戏非常棒"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-30T20:09:30.00Z",
+          "content":"实惠"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-19T20:09:30.00Z",
+          "content":"支持国产"
+        },
+        {
+          "user_name": "匿名用户",
+          "add_time": "2018-04-15T20:09:30.00Z",
+          "content":"非常流畅"
+        }
+      ]
     }
   ]
 }

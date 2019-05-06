@@ -33,7 +33,6 @@ export default {
       this.$http.get("/api/goods").then(result => {
         if (result.body.errno === 0) {
           this.goodslist = result.body.data
-          console.log(this.goodslist[0].img_url[0]);
         }
       })
     },

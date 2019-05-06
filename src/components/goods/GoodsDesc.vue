@@ -44,7 +44,7 @@ export default {
   h3 {
     font-size: 16px;
     color: #226aff;
-    text-align: center;
+    text-align: left;
     margin: 15px 0;
   }
   img[lazy=loading] {

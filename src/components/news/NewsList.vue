@@ -38,8 +38,10 @@
     text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #007aff;
-    border-color: #007aff;
-    border-left: 1px solid #007aff;
+}
+.mui-segmented-control {
+  a {
+    color: #000;
+  }
 }
 </style>
