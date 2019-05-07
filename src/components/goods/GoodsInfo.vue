@@ -24,7 +24,7 @@
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
           <p class="price">市场价：<del>￥{{ goodinfo.market_price }}</del>&nbsp;&nbsp;销售价：<span class="now_price">￥{{ goodinfo.sell_price }}</span></p>
-          <p>购买数量：<num-box @getcount="getSelectedCount" :max="goodinfo.stock_quantity"></num-box></p>
+          <p class="wrap">购买数量：<num-box @getcount="getSelectedCount" :max="goodinfo.stock_quantity"></num-box></p>
           <p>
             <mt-button type="primary">立即购买</mt-button>
             <mt-button type="danger" @click="addToCart">加入购物车</mt-button>
@@ -83,6 +83,16 @@ export default {
     },
     addToCart() {
       this.ballFlag = !this.ballFlag
+      var goodinfo = { 
+        id: this.id, 
+        count: this.selectedCount, 
+        title: this.goodinfo.title,
+        price: this.goodinfo.sell_price,
+        thumb: this.goodinfo.thumb_path,
+        selected: true
+      }
+
+      this.$store.commit("addToCart", goodinfo)
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)"
@@ -131,7 +141,11 @@ export default {
       font-size: 16px;
       font-weight: bold;
     }
-
+    .wrap {
+      div {
+        display: inline-block;
+      }
+    }
     .mui-card-footer {
       display: block;
       button {

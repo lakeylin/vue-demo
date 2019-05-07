@@ -6,6 +6,66 @@ Vue.use(VueRouter)
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+var cart = JSON.parse(localStorage.getItem('cart') || '[]')
+
+var store = new Vuex.Store({
+  state: {
+    cart: cart//将购物车中商品的数据，用一个数组存储起来
+  },
+  mutations: { 
+    addToCart(state, goodinfo) {
+      // 点击加入购物车，把商品信息保存到 store 中的cart上
+      // 分析：
+      // 1. 如果购物车中，之前就已经有这个对应商品了，那么只需要更新数量
+      // 2. 如果没有，则直接把商品数据push到cart中
+
+      // 假设在购物车中，没有找到对应的商品
+      var flag = false
+      state.cart.some(item => {
+        if (item.id == goodinfo.id) {
+          item.count += parseInt(goodinfo.count)
+          flag = true
+          return true
+        }
+      })
+
+      // 如果循环完毕，flag还是false，则没有找到对应商品
+      if(!flag) {
+        state.cart.push(goodinfo)
+      }
+
+      // 当更新 cart 之后，把 cart 数组存储到本地的 localStoreage中
+      localStorage.setItem('cart', JSON.stringify(state.cart))
+    }
+  },
+  getters: {
+    getAllCount(state) {
+      var c = 0
+      state.cart.forEach(item => {
+        c += item.count
+      })
+      return c
+    },
+    getGoodsCount(state) {
+      var o = {}
+      state.cart.forEach(item => {
+        o[item.id] = item.count
+      })
+      return o
+    },
+    getGoodsSelected(state) {
+      var o = {}
+      state.cart.forEach(item => {
+        o[item.id] = item.selected
+      })
+      return o
+    }
+  }
+})
+
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 
@@ -26,5 +86,6 @@ Vue.filter('dateFormat', function (dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
 var vm = new Vue({
   el: '#app',
   render: c => c(app),
-  router
+  router,
+  store
 })
