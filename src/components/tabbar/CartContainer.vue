@@ -2,17 +2,20 @@
   <div class="cart-container">
     <div class="goods-list">
       <!-- 商品列表项区域 -->
-      <div class="mui-card" v-for="item in goodslist" :key="item.id">
+      <div class="mui-card" v-for="(item, i) in goodslist" :key="item.id">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						  <mt-switch :v-model="$store.getters.getGoodsSelected[item.id]"></mt-switch>
+						  <mt-switch 
+                v-model="item.selected"
+                @change="selectedChanged(item.id, item.selected)"></mt-switch>
               <img :src="item.thumb">
               <div class="info">
                 <h1>{{ item.title }}</h1>
                 <p>
                   <span class="price">￥{{ item.price }}</span>
-                  <num-box :initcount="$store.getters.getGoodsCount[item.id]"></num-box>
-                  <a href="#">删除</a>
+                  <num-box :initcount="item.count" :goodid="item.id"></num-box>
+                  <!-- 此处 item.id是用来删除store里的数据，i是用来删除 goodslist的数据的 -->
+                  <a href="#" @click.prevent="removeGood(item.id, i)">删除</a>
                 </p>
               </div>
 					</div>
@@ -22,8 +25,12 @@
       <!-- 结算区域 -->
       <div class="mui-card">
 				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						这是一个最简单的卡片视图控件；卡片视图常用来显示完整独立的一段信息，比如一篇文章的预览图、作者信息、点赞数量等
+					<div class="mui-card-content-inner check-out">
+						<div class="left">
+              <p>总计（不含运费）</p>
+              <p>已勾选商品 <span class="red">0</span> 件， 总价 <span class="red">￥ 0</span></p>
+            </div>
+             <mt-button type="danger">去结算</mt-button>
 					</div>
 				</div>
 			</div>
@@ -46,6 +53,13 @@ export default {
   methods: {
     getGoodsList() {
       this.goodslist = JSON.parse(localStorage.getItem('cart') || '[]')
+    },
+    removeGood(id, index) {
+      this.goodslist.splice(index, 1)
+      this.$store.commit('removeFromCart', id)
+    },
+    selectedChanged(id, selected) {
+      this.$store.commit('updateSelected', { id, selected})
     }
   },
   components: {
@@ -89,7 +103,7 @@ export default {
     .red {
       color: red;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 }

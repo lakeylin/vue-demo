@@ -39,6 +39,34 @@ var store = new Vuex.Store({
 
       // 当更新 cart 之后，把 cart 数组存储到本地的 localStoreage中
       localStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    updateCount(state, goodinfo) {
+      state.cart.some(item => {
+        if (item.id == goodinfo.id) {
+          item.count = parseInt(goodinfo.count)
+          return true
+        }
+      })
+      // 把最新的购物车数据，保存到 localStorage中
+      localStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    removeFromCart(state, id) {
+      state.cart.some((item, i) => {
+        if (item.id == id) {
+          state.cart.splice(i, 1)
+          return true
+        }
+      })
+      localStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    updateSelected(state, goodinfo) {
+      state.cart.some(item => {
+        if (item.id == goodinfo.id) {
+          item.selected = goodinfo.selected
+          return true
+        }
+      })
+      localStorage.setItem('cart', JSON.stringify(state.cart))
     }
   },
   getters: {
@@ -48,20 +76,6 @@ var store = new Vuex.Store({
         c += item.count
       })
       return c
-    },
-    getGoodsCount(state) {
-      var o = {}
-      state.cart.forEach(item => {
-        o[item.id] = item.count
-      })
-      return o
-    },
-    getGoodsSelected(state) {
-      var o = {}
-      state.cart.forEach(item => {
-        o[item.id] = item.selected
-      })
-      return o
     }
   }
 })

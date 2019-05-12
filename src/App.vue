@@ -2,7 +2,7 @@
   <div class="app-container">
     <!-- 顶部 Header 区域 -->
     <mt-header fixed title="lakey的资讯小站">
-      <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
+      <mt-button icon="back" slot="left" v-show="flag" @click="goBack">返回</mt-button>
     </mt-header>
 
     <!-- 中间的 路由 router-view 区域 -->
@@ -34,9 +34,26 @@
 
 <script>
   export default {
+    data() {
+      return {
+        flag: false
+      }
+    },
+    created() {
+      this.flag = this.$route.path === '/home' ? false : true
+    },
     methods: {
       goBack() {
         this.$router.back()
+      }
+    },
+    watch: {
+      '$route.path': function(newVal) {
+        if (newVal === '/home') {
+          this.flag = false
+        } else {
+          this.flag = true
+        }
       }
     }
   }

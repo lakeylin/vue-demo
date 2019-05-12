@@ -2,7 +2,7 @@
   <div>
     <div class="mui-numbox" data-numbox-min='1'>
       <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-      <input id="test" class="mui-input-numbox" type="number" value="initcount" @change="countChanged" ref="numbox"/>
+      <input id="test" class="mui-input-numbox" type="number" :value="initcount" @change="countChanged" ref="numbox"/>
       <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
     </div>
   </div>
@@ -16,9 +16,14 @@ export default {
   },
   methods: {
     countChanged(){
+      // 每当数量值改变，则立即把最新的数量同步到 购物车的 store 中，覆盖之前的数量值
+      this.$store.commit('updateCount', {
+        id: this.goodid,
+        count: this.$refs.numbox.value
+      })
     }
   },
-  props: ['initcount']
+  props: ['initcount', 'goodid']
 }
 </script>
 
