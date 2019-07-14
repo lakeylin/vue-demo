@@ -1,19 +1,6 @@
 <template>
   <div>
-    <mt-swipe :auto="4000">
-      <mt-swipe-item>
-        <img src="../../images/banner1.jpg" alt="">
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../../images/banner2.jpg" alt="">
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../../images/banner3.jpg" alt="">
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../../images/banner4.jpg" alt="">
-      </mt-swipe-item>
-    </mt-swipe>
+   <swiper :lunbotuList="lunbotuList" :isfull="true"></swiper>
 
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/newslist/toutiao">
@@ -39,14 +26,34 @@
 </template>
 
 <script>
+import swiper from "../subcomponents/swiper.vue";
   export default {
-    data() {
-      return {
-      }
-    },
-    methods: {
-      
+   data() {
+    return {
+      lunbotuList: [] // 保存轮播图的数组
+    };
+  },
+  created() {
+    this.getLunbotu();
+  },
+  methods: {
+    getLunbotu() {
+      // 获取轮播图数据的方法
+      this.$http.get("http://www.liulongbin.top:3005/api/getlunbo").then(result => {
+        // console.log(result.body);
+        if (result.body.status === 0) {
+          // 成功了
+          this.lunbotuList = result.body.message;
+        } else {
+          // 失败的
+          Toast("加载轮播图失败。。。");
+        }
+      });
     }
+  },
+  components: {
+    swiper
+  }
   }
 </script>
 

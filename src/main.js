@@ -8,6 +8,8 @@ Vue.use(VueResource)
 
 import Vuex from 'vuex'
 Vue.use(Vuex)
+// 全局设置 post 时候表单数据格式组织形式   application/x-www-form-urlencoded
+Vue.http.options.emulateJSON = true;
 
 var cart = JSON.parse(localStorage.getItem('cart') || '[]')
 
@@ -76,6 +78,33 @@ var store = new Vuex.Store({
         c += item.count
       })
       return c
+    },
+    getGoodsCount(state) {
+      var o = {}
+      state.cart.forEach(item => {
+        o[item.id] = item.count
+      })
+      return o
+    },
+    getGoodsSelected(state) {
+      var o = {}
+      state.cart.forEach(item => {
+        o[item.id] = item.selected
+      })
+      return o
+    },
+    getGoodsCountAndAmount(state) {
+      var o = {
+        count: 0, // 勾选的数量
+        amount: 0 // 勾选的总价
+      }
+      state.cart.forEach(item => {
+        if (item.selected) {
+          o.count += item.count
+          o.amount += item.price * item.count
+        }
+      })
+      return o
     }
   }
 })

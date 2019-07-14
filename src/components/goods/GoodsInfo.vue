@@ -10,11 +10,7 @@
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-          <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="(item, index) in goodinfo.img_url" :key="index">
-              <img :src="item" alt="">
-            </mt-swipe-item>
-          </mt-swipe>
+          <swiper :lunbotuList="lunbotu" :isfull="false"></swiper>
         </div>
       </div>
     </div>
@@ -37,9 +33,9 @@
       <div class="mui-card-header">商品参数</div>
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-          <p>商品货号： SD1223342{{ id }}</p>
-          <p>库存情况：{{ goodinfo.stock_quantity }}</p>
-          <p>上架时间：{{ goodinfo.add_time }}</p>
+          <p>商品货号：{{ goodinfo.goods_no }}</p>
+          <p>库存情况：{{ goodinfo.stock_quantity }}件</p>
+          <p>上架时间：{{ goodinfo.add_time | dateFormat }}</p>
         </div>
       </div>
       <div class="mui-card-footer">
@@ -52,11 +48,13 @@
 </template>
 
 <script>
+import swiper from "../subcomponents/swiper.vue";
 import numbox from '../subcomponents/goodinfo_numbox.vue'
 export default {
   data() {
     return {
       id: this.$route.params.id,
+      lunbotu: [],
       goodinfo: {},
       ballFlag: false,
       selectedCount: 1
@@ -64,16 +62,34 @@ export default {
   },
   created() {
     this.getGoodInfo()
+    this.getLunbotu();
   },
   methods: {
     getGoodInfo() {
-      this.$http.get("/api/goods").then(result => {
-        if (result.body.errno === 0) {
-          this.goodinfo = result.body.data.find(item => {
-            return item.id == this.id
-          })
+      // this.$http.get("/api/goods").then(result => {
+      //   if (result.body.errno === 0) {
+      //     this.goodinfo = result.body.data.find(item => {
+      //       return item.id == this.id
+      //     })
+      //   }
+      // })
+      this.$http.get('http://www.liulongbin.top:3005/api/goods/getinfo/' + this.id)
+      .then(res => {
+        if (res.body.status  === 0) {
+          this.goodinfo = res.body.message[0]
         }
       })
+    },
+    getLunbotu() {
+      this.$http.get("http://www.liulongbin.top:3005/api/getthumimages/" + this.id).then(result => {
+        if (result.body.status === 0) {
+          // 先循环轮播图数组的每一项，为 item 添加 img 属性，因为 轮播图 组件中，只认识 item.img， 不认识 item.src
+          result.body.message.forEach(item => {
+            item.img = item.src;
+          });
+          this.lunbotu = result.body.message;
+        }
+      });
     },
     goDesc(id) {
       this.$router.push({ name: "goodsdesc", params: { id }})
@@ -120,7 +136,8 @@ export default {
     }
   },
   components: {
-    'numBox': numbox
+    'numBox': numbox,
+    swiper
   }
 }
 </script>

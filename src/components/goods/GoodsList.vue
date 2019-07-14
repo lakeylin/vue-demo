@@ -2,7 +2,7 @@
   <div class="goods-list">
     
     <div class="goods-item" v-for="item in goodslist" :key="item.id" @click="goDetail(item.id)">
-      <img :src="item.img_url[0]" alt="">
+      <img :src="item.img_url" alt="">
       <h1 class="title">{{ item.title }}</h1>
       <div class="info">
         <p class="price">
@@ -15,6 +15,8 @@
         </p>
       </div>
     </div>
+    <mt-button type="danger" size="large" @click="getMore" v-if="goodslist.length % 10 === 0">加载更多</mt-button>
+    
   </div>
 </template>
 
@@ -22,6 +24,7 @@
 export default {
   data() {
     return {
+      pageIndex: 1,
       goodslist: []
     }
   },
@@ -30,14 +33,24 @@ export default {
   },
   methods: {
     getGoodsList() {
-      this.$http.get("/api/goods").then(result => {
-        if (result.body.errno === 0) {
-          this.goodslist = result.body.data
+      // this.$http.get("/api/goods").then(result => {
+      //   if (result.body.errno === 0) {
+      //     this.goodslist = result.body.data
+      //   }
+      // })
+      this.$http.get('http://www.liulongbin.top:3005/api/getgoods?pageindex=' + this.pageIndex)
+      .then(res => {
+        if (res.body.status === 0) {
+          this.goodslist = this.goodslist.concat(res.body.message);
         }
       })
     },
     goDetail(id) {
       this.$router.push({ name: 'goodsinfo', params: { id }})
+    },
+    getMore() {
+      this.pageIndex ++
+      this.getGoodsList()
     }
   }
 }
@@ -94,4 +107,5 @@ export default {
     }
   }
 }
+
 </style>

@@ -1,15 +1,10 @@
 <template>
   <div class="goodsdesc-container">
-    <h3>{{ goodinfo.title }}</h3>
+    <h3>{{ info.title }}</h3>
 
     <hr>
 
-    <div class="content" v-html="goodinfo.content"></div>
-    <ul>
-      <li v-for="(item, index) in goodinfo.img_url" :key="index">
-        <img v-lazy="item">
-      </li>
-    </ul>
+    <div class="content" v-html="info.content"></div>
   </div>
 </template>
 
@@ -17,47 +12,43 @@
 export default {
   data() {
     return {
-      id: this.$route.params.id,
-      goodinfo: {}
-    }
+      info: {} // 图文数据
+    };
   },
   created() {
-    this.getGoodInfo()
+    this.getGoodsDesc();
   },
   methods: {
-    getGoodInfo() {
-      this.$http.get("/api/goods").then(result => {
-        if (result.body.errno === 0) {
-          this.goodinfo = result.body.data.find(item => {
-            return item.id == this.id
-          })
-        }
-      })
+    getGoodsDesc() {
+      this.$http
+        .get("http://www.liulongbin.top:3005/api/goods/getdesc/" + this.$route.params.id)
+        .then(result => {
+          if (result.body.status === 0) {
+            this.info = result.body.message[0];
+          }
+        });
     }
   }
-}
-  
+};
 </script>
+
 <style lang="scss">
 .goodsdesc-container {
   padding: 4px;
   h3 {
     font-size: 16px;
     color: #226aff;
-    text-align: left;
+    text-align: center;
     margin: 15px 0;
   }
-  img[lazy=loading] {
-    width: 40px;
-    height: 300px;
-    margin: auto;
+  .content{
+    img{
+      width: 100%;
+      height: auto;
+    }
   }
-  img {
-    width: 100%;
-    height: auto;
-  }
-  li {
-    list-style-type: none;
+  tr td:first-child {
+    width: 50%
   }
 }
 </style>
